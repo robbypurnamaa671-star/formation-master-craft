@@ -1,68 +1,111 @@
-import { useState, useCallback, useRef } from 'react';
-import { Player, Formation, HistoryState, TeamColors } from '@/types/tactics';
+import { useState, useCallback } from 'react';
+import { Player, Formation, HistoryState, TeamColors, TeamType } from '@/types/tactics';
 import { toast } from 'sonner';
 
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
-const defaultTeamColors: TeamColors = {
+const defaultHomeColors: TeamColors = {
   primary: '#3B82F6',
   secondary: '#1E40AF',
   text: '#FFFFFF'
 };
 
-const createDefaultPlayers = (colors: TeamColors): Player[] => [
-  { id: generateId(), x: 50, y: 92, number: 1, name: 'GK', color: '#FFD700', textColor: '#000000' },
-  { id: generateId(), x: 18, y: 72, number: 2, name: 'RB', color: colors.primary, textColor: colors.text },
-  { id: generateId(), x: 38, y: 78, number: 4, name: 'CB', color: colors.primary, textColor: colors.text },
-  { id: generateId(), x: 62, y: 78, number: 5, name: 'CB', color: colors.primary, textColor: colors.text },
-  { id: generateId(), x: 82, y: 72, number: 3, name: 'LB', color: colors.primary, textColor: colors.text },
-  { id: generateId(), x: 30, y: 52, number: 6, name: 'CM', color: colors.primary, textColor: colors.text },
-  { id: generateId(), x: 50, y: 48, number: 8, name: 'CM', color: colors.primary, textColor: colors.text },
-  { id: generateId(), x: 70, y: 52, number: 10, name: 'CM', color: colors.primary, textColor: colors.text },
-  { id: generateId(), x: 20, y: 28, number: 7, name: 'RW', color: colors.primary, textColor: colors.text },
-  { id: generateId(), x: 50, y: 22, number: 9, name: 'ST', color: colors.primary, textColor: colors.text },
-  { id: generateId(), x: 80, y: 28, number: 11, name: 'LW', color: colors.primary, textColor: colors.text },
+const defaultAwayColors: TeamColors = {
+  primary: '#EF4444',
+  secondary: '#DC2626',
+  text: '#FFFFFF'
+};
+
+const createDefaultHomePlayers = (colors: TeamColors): Player[] => [
+  { id: generateId(), x: 50, y: 92, number: 1, name: 'GK', color: '#FFD700', textColor: '#000000', team: 'home' },
+  { id: generateId(), x: 18, y: 72, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 38, y: 78, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 62, y: 78, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 82, y: 72, number: 3, name: 'LB', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 30, y: 52, number: 6, name: 'CM', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 50, y: 48, number: 8, name: 'CM', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 70, y: 52, number: 10, name: 'CM', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 20, y: 28, number: 7, name: 'RW', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 50, y: 22, number: 9, name: 'ST', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 80, y: 28, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'home' },
+];
+
+const createDefaultAwayPlayers = (colors: TeamColors): Player[] => [
+  { id: generateId(), x: 50, y: 8, number: 1, name: 'GK', color: '#22C55E', textColor: '#000000', team: 'away' },
+  { id: generateId(), x: 82, y: 28, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 62, y: 22, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 38, y: 22, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 18, y: 28, number: 3, name: 'LB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 70, y: 48, number: 6, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 50, y: 52, number: 8, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 30, y: 48, number: 10, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 80, y: 72, number: 7, name: 'RW', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 50, y: 78, number: 9, name: 'ST', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 20, y: 72, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'away' },
 ];
 
 export function useTacticsBoard() {
-  const [players, setPlayers] = useState<Player[]>(() => createDefaultPlayers(defaultTeamColors));
-  const [teamColors, setTeamColors] = useState<TeamColors>(defaultTeamColors);
-  const [history, setHistory] = useState<HistoryState[]>([{ players: createDefaultPlayers(defaultTeamColors) }]);
+  const [homePlayers, setHomePlayers] = useState<Player[]>(() => createDefaultHomePlayers(defaultHomeColors));
+  const [awayPlayers, setAwayPlayers] = useState<Player[]>(() => createDefaultAwayPlayers(defaultAwayColors));
+  const [homeColors, setHomeColors] = useState<TeamColors>(defaultHomeColors);
+  const [awayColors, setAwayColors] = useState<TeamColors>(defaultAwayColors);
+  const [activeTeam, setActiveTeam] = useState<TeamType>('home');
+  const [showAwayTeam, setShowAwayTeam] = useState(true);
+  
+  const [history, setHistory] = useState<HistoryState[]>([{ 
+    players: [...createDefaultHomePlayers(defaultHomeColors), ...createDefaultAwayPlayers(defaultAwayColors)] 
+  }]);
   const [historyIndex, setHistoryIndex] = useState(0);
+  
   const [savedFormations, setSavedFormations] = useState<Formation[]>(() => {
     const saved = localStorage.getItem('tacticsFormations');
     return saved ? JSON.parse(saved) : [];
   });
 
-  const saveToHistory = useCallback((newPlayers: Player[]) => {
+  const allPlayers = showAwayTeam ? [...homePlayers, ...awayPlayers] : homePlayers;
+
+  const saveToHistory = useCallback((newHomePlayers: Player[], newAwayPlayers: Player[]) => {
     setHistory(prev => {
       const newHistory = prev.slice(0, historyIndex + 1);
-      newHistory.push({ players: newPlayers });
-      return newHistory.slice(-50); // Keep last 50 states
+      newHistory.push({ players: [...newHomePlayers, ...newAwayPlayers] });
+      return newHistory.slice(-50);
     });
     setHistoryIndex(prev => Math.min(prev + 1, 49));
   }, [historyIndex]);
 
   const updatePlayer = useCallback((id: string, updates: Partial<Player>) => {
-    setPlayers(prev => {
-      const newPlayers = prev.map(p => p.id === id ? { ...p, ...updates } : p);
-      return newPlayers;
-    });
-  }, []);
+    const isHome = homePlayers.some(p => p.id === id);
+    if (isHome) {
+      setHomePlayers(prev => prev.map(p => p.id === id ? { ...p, ...updates } : p));
+    } else {
+      setAwayPlayers(prev => prev.map(p => p.id === id ? { ...p, ...updates } : p));
+    }
+  }, [homePlayers]);
 
   const commitPlayerMove = useCallback((id: string, x: number, y: number) => {
-    setPlayers(prev => {
-      const newPlayers = prev.map(p => p.id === id ? { ...p, x, y } : p);
-      saveToHistory(newPlayers);
-      return newPlayers;
-    });
-  }, [saveToHistory]);
+    const isHome = homePlayers.some(p => p.id === id);
+    if (isHome) {
+      setHomePlayers(prev => {
+        const newPlayers = prev.map(p => p.id === id ? { ...p, x, y } : p);
+        saveToHistory(newPlayers, awayPlayers);
+        return newPlayers;
+      });
+    } else {
+      setAwayPlayers(prev => {
+        const newPlayers = prev.map(p => p.id === id ? { ...p, x, y } : p);
+        saveToHistory(homePlayers, newPlayers);
+        return newPlayers;
+      });
+    }
+  }, [homePlayers, awayPlayers, saveToHistory]);
 
   const undo = useCallback(() => {
     if (historyIndex > 0) {
       const newIndex = historyIndex - 1;
       setHistoryIndex(newIndex);
-      setPlayers(history[newIndex].players);
+      const players = history[newIndex].players;
+      setHomePlayers(players.filter(p => p.team === 'home'));
+      setAwayPlayers(players.filter(p => p.team === 'away'));
       toast('Undo');
     }
   }, [history, historyIndex]);
@@ -71,7 +114,9 @@ export function useTacticsBoard() {
     if (historyIndex < history.length - 1) {
       const newIndex = historyIndex + 1;
       setHistoryIndex(newIndex);
-      setPlayers(history[newIndex].players);
+      const players = history[newIndex].players;
+      setHomePlayers(players.filter(p => p.team === 'home'));
+      setAwayPlayers(players.filter(p => p.team === 'away'));
       toast('Redo');
     }
   }, [history, historyIndex]);
@@ -80,8 +125,10 @@ export function useTacticsBoard() {
     const formation: Formation = {
       id: generateId(),
       name,
-      players: players.map(p => ({ ...p })),
-      teamColors,
+      players: homePlayers.map(p => ({ ...p })),
+      awayPlayers: awayPlayers.map(p => ({ ...p })),
+      homeColors,
+      awayColors,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
@@ -94,14 +141,22 @@ export function useTacticsBoard() {
     
     toast.success(`Formation "${name}" saved!`);
     return formation;
-  }, [players, teamColors]);
+  }, [homePlayers, awayPlayers, homeColors, awayColors]);
 
   const loadFormation = useCallback((formation: Formation) => {
-    setPlayers(formation.players.map(p => ({ ...p, id: generateId() })));
-    setTeamColors(formation.teamColors);
-    saveToHistory(formation.players);
+    const newHomePlayers = formation.players.map(p => ({ ...p, id: generateId(), team: 'home' as TeamType }));
+    const newAwayPlayers = (formation.awayPlayers || []).map(p => ({ ...p, id: generateId(), team: 'away' as TeamType }));
+    
+    setHomePlayers(newHomePlayers);
+    if (newAwayPlayers.length > 0) {
+      setAwayPlayers(newAwayPlayers);
+    }
+    if (formation.homeColors) setHomeColors(formation.homeColors);
+    if (formation.awayColors) setAwayColors(formation.awayColors);
+    
+    saveToHistory(newHomePlayers, newAwayPlayers.length > 0 ? newAwayPlayers : awayPlayers);
     toast.success(`Loaded "${formation.name}"`);
-  }, [saveToHistory]);
+  }, [saveToHistory, awayPlayers]);
 
   const deleteFormation = useCallback((id: string) => {
     setSavedFormations(prev => {
@@ -112,37 +167,60 @@ export function useTacticsBoard() {
     toast('Formation deleted');
   }, []);
 
-  const loadCoachFormation = useCallback((coachPlayers: Omit<Player, 'id'>[]) => {
+  const loadCoachFormation = useCallback((coachPlayers: Omit<Player, 'id' | 'team'>[]) => {
     const newPlayers = coachPlayers.map(p => ({
       ...p,
       id: generateId(),
+      team: 'home' as TeamType,
     }));
-    setPlayers(newPlayers);
-    saveToHistory(newPlayers);
-  }, [saveToHistory]);
+    setHomePlayers(newPlayers);
+    saveToHistory(newPlayers, awayPlayers);
+  }, [saveToHistory, awayPlayers]);
 
-  const updateTeamColors = useCallback((colors: TeamColors) => {
-    setTeamColors(colors);
-    setPlayers(prev => prev.map((p, i) => 
-      i === 0 
-        ? p // Keep goalkeeper colors
-        : { ...p, color: colors.primary, textColor: colors.text }
-    ));
+  const updateTeamColors = useCallback((colors: TeamColors, team: TeamType) => {
+    if (team === 'home') {
+      setHomeColors(colors);
+      setHomePlayers(prev => prev.map((p, i) => 
+        i === 0 
+          ? p // Keep goalkeeper colors
+          : { ...p, color: colors.primary, textColor: colors.text }
+      ));
+    } else {
+      setAwayColors(colors);
+      setAwayPlayers(prev => prev.map((p, i) => 
+        i === 0 
+          ? p // Keep goalkeeper colors
+          : { ...p, color: colors.primary, textColor: colors.text }
+      ));
+    }
   }, []);
 
   const resetBoard = useCallback(() => {
-    const newPlayers = createDefaultPlayers(teamColors);
-    setPlayers(newPlayers);
-    saveToHistory(newPlayers);
+    const newHomePlayers = createDefaultHomePlayers(homeColors);
+    const newAwayPlayers = createDefaultAwayPlayers(awayColors);
+    setHomePlayers(newHomePlayers);
+    setAwayPlayers(newAwayPlayers);
+    saveToHistory(newHomePlayers, newAwayPlayers);
     toast('Board reset');
-  }, [teamColors, saveToHistory]);
+  }, [homeColors, awayColors, saveToHistory]);
+
+  const toggleAwayTeam = useCallback(() => {
+    setShowAwayTeam(prev => !prev);
+  }, []);
 
   return {
-    players,
-    teamColors,
+    players: allPlayers,
+    homePlayers,
+    awayPlayers,
+    homeColors,
+    awayColors,
+    activeTeam,
+    showAwayTeam,
     savedFormations,
     canUndo: historyIndex > 0,
     canRedo: historyIndex < history.length - 1,
+    setActiveTeam,
+    toggleAwayTeam,
     updatePlayer,
     commitPlayerMove,
     undo,
