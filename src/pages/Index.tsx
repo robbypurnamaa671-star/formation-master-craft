@@ -25,10 +25,15 @@ const Index = () => {
 
   const {
     players,
-    teamColors,
+    homeColors,
+    awayColors,
+    activeTeam,
+    showAwayTeam,
     savedFormations,
     canUndo,
     canRedo,
+    setActiveTeam,
+    toggleAwayTeam,
     updatePlayer,
     commitPlayerMove,
     undo,
@@ -108,8 +113,13 @@ const Index = () => {
               />
             ) : (
               <TeamColorPicker
-                colors={teamColors}
-                onChange={updateTeamColors}
+                homeColors={homeColors}
+                awayColors={awayColors}
+                activeTeam={activeTeam}
+                showAwayTeam={showAwayTeam}
+                onChangeTeam={setActiveTeam}
+                onChangeColors={updateTeamColors}
+                onToggleAwayTeam={toggleAwayTeam}
               />
             )}
           </motion.div>

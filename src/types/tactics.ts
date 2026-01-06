@@ -1,3 +1,5 @@
+export type TeamType = 'home' | 'away';
+
 export interface Player {
   id: string;
   x: number;
@@ -7,13 +9,16 @@ export interface Player {
   color: string;
   textColor: string;
   position?: string;
+  team: TeamType;
 }
 
 export interface Formation {
   id: string;
   name: string;
   players: Player[];
-  teamColors: TeamColors;
+  awayPlayers: Player[];
+  homeColors: TeamColors;
+  awayColors: TeamColors;
   createdAt: number;
   updatedAt: number;
 }
@@ -31,7 +36,7 @@ export interface CoachTactic {
   style: string;
   description: string;
   keyPrinciples: string[];
-  players: Omit<Player, 'id'>[];
+  players: Omit<Player, 'id' | 'team'>[];
   image?: string;
 }
 
