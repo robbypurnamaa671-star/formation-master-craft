@@ -30,18 +30,19 @@ const createDefaultHomePlayers = (colors: TeamColors): Player[] => [
   { id: generateId(), x: 80, y: 28, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'home' },
 ];
 
+// 4-3-3 formation for away team - all players in their half (y < 50%)
 const createDefaultAwayPlayers = (colors: TeamColors): Player[] => [
   { id: generateId(), x: 50, y: 8, number: 1, name: 'GK', color: '#22C55E', textColor: '#000000', team: 'away' },
-  { id: generateId(), x: 82, y: 28, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 62, y: 22, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 38, y: 22, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 18, y: 28, number: 3, name: 'LB', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 70, y: 48, number: 6, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 50, y: 52, number: 8, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 30, y: 48, number: 10, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 80, y: 72, number: 7, name: 'RW', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 50, y: 78, number: 9, name: 'ST', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 20, y: 72, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 82, y: 22, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 62, y: 18, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 38, y: 18, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 18, y: 22, number: 3, name: 'LB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 70, y: 34, number: 6, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 50, y: 30, number: 8, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 30, y: 34, number: 10, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 80, y: 45, number: 7, name: 'RW', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 50, y: 42, number: 9, name: 'ST', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 20, y: 45, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'away' },
 ];
 
 export function useTacticsBoard() {

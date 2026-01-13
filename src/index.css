@@ -99,9 +99,10 @@
   }
 
   .player-jersey {
-    @apply rounded-full flex items-center justify-center font-bold text-sm shadow-lg;
-    width: 44px;
-    height: 44px;
+    @apply rounded-full flex items-center justify-center font-bold shadow-lg;
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
     cursor: grab;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }

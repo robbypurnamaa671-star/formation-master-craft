@@ -76,13 +76,13 @@ export const PlayerToken: React.FC<PlayerTokenProps> = ({
       }}
       whileTap={{ scale: 1.05 }}
     >
-      <span className="font-bold text-sm select-none pointer-events-none">
+      <span className="font-bold select-none pointer-events-none" style={{ fontSize: '10px' }}>
         {player.number}
       </span>
       
       {/* Player name label */}
       <div 
-        className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] font-medium whitespace-nowrap px-1 py-0.5 rounded bg-background/80 text-foreground pointer-events-none select-none"
+        className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 text-[8px] font-medium whitespace-nowrap px-0.5 py-0.5 rounded bg-background/80 text-foreground pointer-events-none select-none"
       >
         {player.name}
       </div>
