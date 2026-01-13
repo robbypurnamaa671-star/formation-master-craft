@@ -29,8 +29,8 @@ export const TacticsBoard: React.FC<TacticsBoardProps> = ({
       {/* Pitch Background */}
       <PitchSVG className="absolute inset-0 w-full h-full" />
       
-      {/* Players Layer */}
-      <div className="absolute inset-0">
+      {/* Players Layer - positioned exactly over the pitch */}
+      <div className="absolute inset-0 overflow-hidden">
         {players.map((player) => (
           <PlayerToken
             key={player.id}
