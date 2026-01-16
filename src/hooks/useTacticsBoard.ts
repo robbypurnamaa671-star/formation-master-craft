@@ -17,35 +17,34 @@ const defaultAwayColors: TeamColors = {
 };
 
 // 4-3-3 formation for home team - in their half (x < 50% for horizontal pitch)
-// Home team plays on left side
+// Now positions are relative to the playable area (inside the pitch boundary)
 const createDefaultHomePlayers = (colors: TeamColors): Player[] => [
   { id: generateId(), x: 5, y: 50, number: 1, name: 'GK', color: '#FFD700', textColor: '#000000', team: 'home' },
-  { id: generateId(), x: 18, y: 15, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'home' },
-  { id: generateId(), x: 15, y: 35, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'home' },
-  { id: generateId(), x: 15, y: 65, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'home' },
-  { id: generateId(), x: 18, y: 85, number: 3, name: 'LB', color: colors.primary, textColor: colors.text, team: 'home' },
-  { id: generateId(), x: 32, y: 25, number: 6, name: 'CM', color: colors.primary, textColor: colors.text, team: 'home' },
-  { id: generateId(), x: 35, y: 50, number: 8, name: 'CM', color: colors.primary, textColor: colors.text, team: 'home' },
-  { id: generateId(), x: 32, y: 75, number: 10, name: 'CM', color: colors.primary, textColor: colors.text, team: 'home' },
-  { id: generateId(), x: 45, y: 15, number: 7, name: 'RW', color: colors.primary, textColor: colors.text, team: 'home' },
-  { id: generateId(), x: 48, y: 50, number: 9, name: 'ST', color: colors.primary, textColor: colors.text, team: 'home' },
-  { id: generateId(), x: 45, y: 85, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 16, y: 8, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 14, y: 35, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 14, y: 65, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 16, y: 92, number: 3, name: 'LB', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 28, y: 25, number: 6, name: 'CM', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 32, y: 50, number: 8, name: 'CM', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 28, y: 75, number: 10, name: 'CM', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 42, y: 8, number: 7, name: 'RW', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 46, y: 50, number: 9, name: 'ST', color: colors.primary, textColor: colors.text, team: 'home' },
+  { id: generateId(), x: 42, y: 92, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'home' },
 ];
 
 // 4-3-3 formation for away team - in their half (x > 50% for horizontal pitch)
-// Away team plays on right side
 const createDefaultAwayPlayers = (colors: TeamColors): Player[] => [
   { id: generateId(), x: 95, y: 50, number: 1, name: 'GK', color: '#22C55E', textColor: '#000000', team: 'away' },
-  { id: generateId(), x: 82, y: 85, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 85, y: 65, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 85, y: 35, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 82, y: 15, number: 3, name: 'LB', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 68, y: 75, number: 6, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 65, y: 50, number: 8, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 68, y: 25, number: 10, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 55, y: 85, number: 7, name: 'RW', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 52, y: 50, number: 9, name: 'ST', color: colors.primary, textColor: colors.text, team: 'away' },
-  { id: generateId(), x: 55, y: 15, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 84, y: 92, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 86, y: 65, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 86, y: 35, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 84, y: 8, number: 3, name: 'LB', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 72, y: 75, number: 6, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 68, y: 50, number: 8, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 72, y: 25, number: 10, name: 'CM', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 58, y: 92, number: 7, name: 'RW', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 54, y: 50, number: 9, name: 'ST', color: colors.primary, textColor: colors.text, team: 'away' },
+  { id: generateId(), x: 58, y: 8, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'away' },
 ];
 
 export function useTacticsBoard() {
