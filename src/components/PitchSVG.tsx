@@ -7,21 +7,21 @@ interface PitchSVGProps {
 export const PitchSVG: React.FC<PitchSVGProps> = ({ className }) => {
   return (
     <svg
-      viewBox="0 0 100 140"
+      viewBox="0 0 140 100"
       className={className}
       preserveAspectRatio="xMidYMid meet"
     >
       {/* Pitch Background */}
-      <rect x="0" y="0" width="100" height="140" fill="url(#pitchGradient)" />
+      <rect x="0" y="0" width="140" height="100" fill="url(#pitchGradient)" />
       
-      {/* Grass pattern stripes */}
+      {/* Grass pattern stripes - horizontal */}
       {[...Array(14)].map((_, i) => (
         <rect
           key={i}
-          x="0"
-          y={i * 10}
-          width="100"
-          height="10"
+          x={i * 10}
+          y="0"
+          width="10"
+          height="100"
           fill={i % 2 === 0 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)'}
         />
       ))}
@@ -30,75 +30,73 @@ export const PitchSVG: React.FC<PitchSVGProps> = ({ className }) => {
       <rect
         x="3"
         y="3"
-        width="94"
-        height="134"
+        width="134"
+        height="94"
         className="pitch-lines"
         rx="1"
       />
       
       {/* Center line */}
-      <line x1="3" y1="70" x2="97" y2="70" className="pitch-lines" />
+      <line x1="70" y1="3" x2="70" y2="97" className="pitch-lines" />
       
       {/* Center circle */}
-      <circle cx="50" cy="70" r="12" className="pitch-lines" />
-      <circle cx="50" cy="70" r="0.8" fill="hsl(142 50% 70%)" />
+      <circle cx="70" cy="50" r="12" className="pitch-lines" />
+      <circle cx="70" cy="50" r="0.8" fill="hsl(142 50% 70%)" />
       
-      {/* Top penalty area */}
-      <rect x="20" y="3" width="60" height="22" className="pitch-lines" />
+      {/* Left penalty area */}
+      <rect x="3" y="20" width="22" height="60" className="pitch-lines" />
       
-      {/* Top goal area */}
-      <rect x="32" y="3" width="36" height="8" className="pitch-lines" />
+      {/* Left goal area */}
+      <rect x="3" y="32" width="8" height="36" className="pitch-lines" />
       
-      {/* Top penalty spot */}
-      <circle cx="50" cy="17" r="0.8" fill="hsl(142 50% 70%)" />
+      {/* Left penalty spot */}
+      <circle cx="17" cy="50" r="0.8" fill="hsl(142 50% 70%)" />
       
-      {/* Top penalty arc */}
+      {/* Left penalty arc */}
       <path
-        d="M 35 25 A 12 12 0 0 0 65 25"
+        d="M 25 35 A 12 12 0 0 1 25 65"
         className="pitch-lines"
       />
       
-      {/* Bottom penalty area */}
-      <rect x="20" y="115" width="60" height="22" className="pitch-lines" />
+      {/* Right penalty area */}
+      <rect x="115" y="20" width="22" height="60" className="pitch-lines" />
       
-      {/* Bottom goal area */}
-      <rect x="32" y="129" width="36" height="8" className="pitch-lines" />
+      {/* Right goal area */}
+      <rect x="129" y="32" width="8" height="36" className="pitch-lines" />
       
-      {/* Bottom penalty spot */}
-      <circle cx="50" cy="123" r="0.8" fill="hsl(142 50% 70%)" />
+      {/* Right penalty spot */}
+      <circle cx="123" cy="50" r="0.8" fill="hsl(142 50% 70%)" />
       
-      {/* Bottom penalty arc */}
+      {/* Right penalty arc */}
       <path
-        d="M 35 115 A 12 12 0 0 1 65 115"
+        d="M 115 35 A 12 12 0 0 0 115 65"
         className="pitch-lines"
       />
       
       {/* Corner arcs */}
-      <path d="M 3 6 A 3 3 0 0 0 6 3" className="pitch-lines" />
-      <path d="M 94 3 A 3 3 0 0 0 97 6" className="pitch-lines" />
-      <path d="M 3 134 A 3 3 0 0 1 6 137" className="pitch-lines" />
-      <path d="M 94 137 A 3 3 0 0 1 97 134" className="pitch-lines" />
+      <path d="M 6 3 A 3 3 0 0 0 3 6" className="pitch-lines" />
+      <path d="M 3 94 A 3 3 0 0 0 6 97" className="pitch-lines" />
+      <path d="M 134 3 A 3 3 0 0 1 137 6" className="pitch-lines" />
+      <path d="M 137 94 A 3 3 0 0 1 134 97" className="pitch-lines" />
       
-      {/* Goal nets - top */}
+      {/* Goal nets - left */}
       <g>
-        <rect x="36" y="0" width="28" height="3" fill="rgba(0,0,0,0.3)" stroke="hsl(142 50% 70%)" strokeWidth="0.3" />
-        {/* Net pattern - top */}
+        <rect x="0" y="36" width="3" height="28" fill="rgba(0,0,0,0.3)" stroke="hsl(142 50% 70%)" strokeWidth="0.3" />
         {[...Array(7)].map((_, i) => (
-          <line key={`top-v-${i}`} x1={38 + i * 4} y1="0" x2={38 + i * 4} y2="3" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
+          <line key={`left-h-${i}`} x1="0" y1={38 + i * 4} x2="3" y2={38 + i * 4} stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
         ))}
-        <line x1="36" y1="1" x2="64" y2="1" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
-        <line x1="36" y1="2" x2="64" y2="2" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
+        <line x1="1" y1="36" x2="1" y2="64" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
+        <line x1="2" y1="36" x2="2" y2="64" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
       </g>
       
-      {/* Goal nets - bottom */}
+      {/* Goal nets - right */}
       <g>
-        <rect x="36" y="137" width="28" height="3" fill="rgba(0,0,0,0.3)" stroke="hsl(142 50% 70%)" strokeWidth="0.3" />
-        {/* Net pattern - bottom */}
+        <rect x="137" y="36" width="3" height="28" fill="rgba(0,0,0,0.3)" stroke="hsl(142 50% 70%)" strokeWidth="0.3" />
         {[...Array(7)].map((_, i) => (
-          <line key={`bot-v-${i}`} x1={38 + i * 4} y1="137" x2={38 + i * 4} y2="140" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
+          <line key={`right-h-${i}`} x1="137" y1={38 + i * 4} x2="140" y2={38 + i * 4} stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
         ))}
-        <line x1="36" y1="138" x2="64" y2="138" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
-        <line x1="36" y1="139" x2="64" y2="139" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
+        <line x1="138" y1="36" x2="138" y2="64" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
+        <line x1="139" y1="36" x2="139" y2="64" stroke="hsl(142 50% 70%)" strokeWidth="0.15" opacity="0.6" />
       </g>
       
       <defs>
