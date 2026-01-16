@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { PitchSVG } from './PitchSVG';
 import { PlayerToken } from './PlayerToken';
 import { Player } from '@/types/tactics';
@@ -20,6 +20,8 @@ export const TacticsBoard: React.FC<TacticsBoardProps> = ({
   selectedPlayer,
   boardRef,
 }) => {
+  const playersContainerRef = useRef<HTMLDivElement>(null);
+
   return (
     <div 
       ref={boardRef}
@@ -29,13 +31,22 @@ export const TacticsBoard: React.FC<TacticsBoardProps> = ({
       {/* Pitch Background */}
       <PitchSVG className="absolute inset-0 w-full h-full" />
       
-      {/* Players Layer - positioned exactly over the pitch */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Players Layer - positioned within pitch boundary */}
+      <div 
+        ref={playersContainerRef}
+        className="absolute overflow-hidden"
+        style={{
+          left: '2.14%',
+          top: '3%',
+          width: '95.72%',
+          height: '94%',
+        }}
+      >
         {players.map((player) => (
           <PlayerToken
             key={player.id}
             player={player}
-            containerRef={boardRef}
+            containerRef={playersContainerRef}
             onDragEnd={onPlayerMove}
             onUpdate={onPlayerUpdate}
             onSelect={onSelectPlayer}
