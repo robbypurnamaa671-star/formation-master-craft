@@ -23,7 +23,7 @@ export const TacticsBoard: React.FC<TacticsBoardProps> = ({
   return (
     <div 
       ref={boardRef}
-      className="relative w-full aspect-[10/14] max-h-[70vh] rounded-xl overflow-hidden shadow-2xl"
+      className="relative w-full aspect-[14/10] max-h-[70vh] rounded-xl overflow-hidden shadow-2xl"
       onClick={() => onSelectPlayer(null)}
     >
       {/* Pitch Background */}
