@@ -39,9 +39,9 @@ export const PlayerToken: React.FC<PlayerTokenProps> = ({
     const newX = ((tokenCenterX - container.left) / container.width) * 100;
     const newY = ((tokenCenterY - container.top) / container.height) * 100;
     
-    // Clamp values between 8% and 92% to keep players fully visible within the pitch boundary
-    const clampedX = Math.max(8, Math.min(92, newX));
-    const clampedY = Math.max(8, Math.min(92, newY));
+    // Clamp values between 5% and 95% to keep players within the pitch boundary
+    const clampedX = Math.max(5, Math.min(95, newX));
+    const clampedY = Math.max(5, Math.min(95, newY));
     
     onDragEnd(player.id, clampedX, clampedY);
   };
