@@ -32,6 +32,8 @@ export const TacticsBoard: React.FC<TacticsBoardProps> = ({
       <PitchSVG className="absolute inset-0 w-full h-full" />
       
       {/* Players Layer - positioned within pitch boundary */}
+      {/* SVG viewBox is 140x100, pitch lines are at x:3-137, y:3-97 */}
+      {/* So playable area: left=3/140=2.14%, top=3/100=3%, width=134/140=95.72%, height=94/100=94% */}
       <div 
         ref={playersContainerRef}
         className="absolute overflow-hidden"
