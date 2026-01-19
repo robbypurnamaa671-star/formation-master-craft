@@ -19,7 +19,7 @@ const defaultAwayColors: TeamColors = {
 // 4-3-3 formation for home team - in their half (x < 50% for horizontal pitch)
 // Positions use 12-88% scale to ensure player tokens stay fully within pitch boundary
 const createDefaultHomePlayers = (colors: TeamColors): Player[] => [
-  { id: generateId(), x: 12, y: 50, number: 1, name: 'GK', color: '#FFD700', textColor: '#000000', team: 'home' },
+  { id: generateId(), x: 15, y: 50, number: 1, name: 'GK', color: '#FFD700', textColor: '#000000', team: 'home' },
   { id: generateId(), x: 22, y: 15, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'home' },
   { id: generateId(), x: 22, y: 38, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'home' },
   { id: generateId(), x: 22, y: 62, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'home' },
@@ -34,7 +34,7 @@ const createDefaultHomePlayers = (colors: TeamColors): Player[] => [
 
 // 4-3-3 formation for away team - in their half (x > 50% for horizontal pitch)
 const createDefaultAwayPlayers = (colors: TeamColors): Player[] => [
-  { id: generateId(), x: 88, y: 50, number: 1, name: 'GK', color: '#22C55E', textColor: '#000000', team: 'away' },
+  { id: generateId(), x: 85, y: 50, number: 1, name: 'GK', color: '#22C55E', textColor: '#000000', team: 'away' },
   { id: generateId(), x: 78, y: 85, number: 2, name: 'RB', color: colors.primary, textColor: colors.text, team: 'away' },
   { id: generateId(), x: 78, y: 62, number: 4, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
   { id: generateId(), x: 78, y: 38, number: 5, name: 'CB', color: colors.primary, textColor: colors.text, team: 'away' },
