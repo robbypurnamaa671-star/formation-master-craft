@@ -45,6 +45,18 @@ export interface AnimationPath {
   points: { x: number; y: number }[];
 }
 
+export type ArrowType = 'pass' | 'run';
+
+export interface Arrow {
+  id: string;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  type: ArrowType;
+  color: string;
+}
+
 export interface HistoryState {
   players: Player[];
 }

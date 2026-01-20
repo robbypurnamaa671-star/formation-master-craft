@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Player, Formation, HistoryState, TeamColors, TeamType } from '@/types/tactics';
+import { Player, Formation, HistoryState, TeamColors, TeamType, Arrow, ArrowType } from '@/types/tactics';
 import { toast } from 'sonner';
 
 const generateId = () => Math.random().toString(36).substring(2, 9);
@@ -52,6 +52,8 @@ export interface BallPosition {
   y: number;
 }
 
+const generateArrowId = () => `arrow-${Math.random().toString(36).substring(2, 9)}`;
+
 export function useTacticsBoard() {
   const [homePlayers, setHomePlayers] = useState<Player[]>(() => createDefaultHomePlayers(defaultHomeColors));
   const [awayPlayers, setAwayPlayers] = useState<Player[]>(() => createDefaultAwayPlayers(defaultAwayColors));
@@ -61,7 +63,9 @@ export function useTacticsBoard() {
   const [showAwayTeam, setShowAwayTeam] = useState(true);
   const [showBall, setShowBall] = useState(true);
   const [ballPosition, setBallPosition] = useState<BallPosition>({ x: 50, y: 50 });
-  
+  const [arrows, setArrows] = useState<Arrow[]>([]);
+  const [isDrawingMode, setIsDrawingMode] = useState(false);
+  const [arrowType, setArrowType] = useState<ArrowType>('pass');
   const [history, setHistory] = useState<HistoryState[]>([{ 
     players: [...createDefaultHomePlayers(defaultHomeColors), ...createDefaultAwayPlayers(defaultAwayColors)] 
   }]);
@@ -211,6 +215,7 @@ export function useTacticsBoard() {
     setHomePlayers(newHomePlayers);
     setAwayPlayers(newAwayPlayers);
     setBallPosition({ x: 50, y: 50 });
+    setArrows([]);
     saveToHistory(newHomePlayers, newAwayPlayers);
     toast('Board reset');
   }, [homeColors, awayColors, saveToHistory]);
@@ -227,6 +232,36 @@ export function useTacticsBoard() {
     setBallPosition({ x, y });
   }, []);
 
+  const toggleDrawingMode = useCallback(() => {
+    setIsDrawingMode(prev => !prev);
+  }, []);
+
+  const changeArrowType = useCallback((type: ArrowType) => {
+    setArrowType(type);
+  }, []);
+
+  const addArrow = useCallback((startX: number, startY: number, endX: number, endY: number) => {
+    const newArrow: Arrow = {
+      id: generateArrowId(),
+      startX,
+      startY,
+      endX,
+      endY,
+      type: arrowType,
+      color: arrowType === 'pass' ? '#FBBF24' : '#22D3EE',
+    };
+    setArrows(prev => [...prev, newArrow]);
+  }, [arrowType]);
+
+  const deleteArrow = useCallback((id: string) => {
+    setArrows(prev => prev.filter(a => a.id !== id));
+  }, []);
+
+  const clearArrows = useCallback(() => {
+    setArrows([]);
+    toast('Arrows cleared');
+  }, []);
+
   return {
     players: allPlayers,
     homePlayers,
@@ -237,6 +272,9 @@ export function useTacticsBoard() {
     showAwayTeam,
     showBall,
     ballPosition,
+    arrows,
+    isDrawingMode,
+    arrowType,
     savedFormations,
     canUndo: historyIndex > 0,
     canRedo: historyIndex < history.length - 1,
@@ -244,6 +282,11 @@ export function useTacticsBoard() {
     toggleAwayTeam,
     toggleBall,
     moveBall,
+    toggleDrawingMode,
+    changeArrowType,
+    addArrow,
+    deleteArrow,
+    clearArrows,
     updatePlayer,
     commitPlayerMove,
     undo,

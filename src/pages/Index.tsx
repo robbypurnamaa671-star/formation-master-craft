@@ -31,6 +31,9 @@ const Index = () => {
     showAwayTeam,
     showBall,
     ballPosition,
+    arrows,
+    isDrawingMode,
+    arrowType,
     savedFormations,
     canUndo,
     canRedo,
@@ -38,6 +41,11 @@ const Index = () => {
     toggleAwayTeam,
     toggleBall,
     moveBall,
+    toggleDrawingMode,
+    changeArrowType,
+    addArrow,
+    deleteArrow,
+    clearArrows,
     updatePlayer,
     commitPlayerMove,
     undo,
@@ -93,11 +101,17 @@ const Index = () => {
             <BoardToolbar
               canUndo={canUndo}
               canRedo={canRedo}
+              isDrawingMode={isDrawingMode}
+              arrowType={arrowType}
+              hasArrows={arrows.length > 0}
               onUndo={undo}
               onRedo={redo}
               onReset={resetBoard}
               onSave={() => setSaveDialogOpen(true)}
               onExport={handleExport}
+              onToggleDrawing={toggleDrawingMode}
+              onChangeArrowType={changeArrowType}
+              onClearArrows={clearArrows}
             />
             
             <TacticsBoard
@@ -110,6 +124,11 @@ const Index = () => {
               showBall={showBall}
               ballPosition={ballPosition}
               onBallMove={moveBall}
+              arrows={arrows}
+              isDrawingMode={isDrawingMode}
+              arrowType={arrowType}
+              onAddArrow={addArrow}
+              onDeleteArrow={deleteArrow}
             />
             
             {selectedPlayer ? (
