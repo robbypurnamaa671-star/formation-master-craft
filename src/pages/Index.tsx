@@ -29,11 +29,15 @@ const Index = () => {
     awayColors,
     activeTeam,
     showAwayTeam,
+    showBall,
+    ballPosition,
     savedFormations,
     canUndo,
     canRedo,
     setActiveTeam,
     toggleAwayTeam,
+    toggleBall,
+    moveBall,
     updatePlayer,
     commitPlayerMove,
     undo,
@@ -103,6 +107,9 @@ const Index = () => {
               onSelectPlayer={setSelectedPlayer}
               selectedPlayer={selectedPlayer}
               boardRef={boardRef}
+              showBall={showBall}
+              ballPosition={ballPosition}
+              onBallMove={moveBall}
             />
             
             {selectedPlayer ? (

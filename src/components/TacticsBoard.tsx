@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
 import { PitchSVG } from './PitchSVG';
 import { PlayerToken } from './PlayerToken';
+import { BallToken } from './BallToken';
 import { Player } from '@/types/tactics';
+import { BallPosition } from '@/hooks/useTacticsBoard';
 
 interface TacticsBoardProps {
   players: Player[];
@@ -10,6 +12,9 @@ interface TacticsBoardProps {
   onSelectPlayer: (player: Player | null) => void;
   selectedPlayer: Player | null;
   boardRef: React.RefObject<HTMLDivElement>;
+  showBall?: boolean;
+  ballPosition?: BallPosition;
+  onBallMove?: (x: number, y: number) => void;
 }
 
 export const TacticsBoard: React.FC<TacticsBoardProps> = ({
@@ -19,6 +24,9 @@ export const TacticsBoard: React.FC<TacticsBoardProps> = ({
   onSelectPlayer,
   selectedPlayer,
   boardRef,
+  showBall = true,
+  ballPosition = { x: 50, y: 50 },
+  onBallMove,
 }) => {
   const playersContainerRef = useRef<HTMLDivElement>(null);
 
@@ -55,6 +63,15 @@ export const TacticsBoard: React.FC<TacticsBoardProps> = ({
             isSelected={selectedPlayer?.id === player.id}
           />
         ))}
+        
+        {/* Ball */}
+        {showBall && onBallMove && (
+          <BallToken
+            position={ballPosition}
+            containerRef={playersContainerRef}
+            onDragEnd={onBallMove}
+          />
+        )}
       </div>
       
       {/* Subtle vignette effect */}

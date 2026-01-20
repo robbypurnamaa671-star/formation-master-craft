@@ -47,6 +47,11 @@ const createDefaultAwayPlayers = (colors: TeamColors): Player[] => [
   { id: generateId(), x: 54, y: 18, number: 11, name: 'LW', color: colors.primary, textColor: colors.text, team: 'away' },
 ];
 
+export interface BallPosition {
+  x: number;
+  y: number;
+}
+
 export function useTacticsBoard() {
   const [homePlayers, setHomePlayers] = useState<Player[]>(() => createDefaultHomePlayers(defaultHomeColors));
   const [awayPlayers, setAwayPlayers] = useState<Player[]>(() => createDefaultAwayPlayers(defaultAwayColors));
@@ -54,6 +59,8 @@ export function useTacticsBoard() {
   const [awayColors, setAwayColors] = useState<TeamColors>(defaultAwayColors);
   const [activeTeam, setActiveTeam] = useState<TeamType>('home');
   const [showAwayTeam, setShowAwayTeam] = useState(true);
+  const [showBall, setShowBall] = useState(true);
+  const [ballPosition, setBallPosition] = useState<BallPosition>({ x: 50, y: 50 });
   
   const [history, setHistory] = useState<HistoryState[]>([{ 
     players: [...createDefaultHomePlayers(defaultHomeColors), ...createDefaultAwayPlayers(defaultAwayColors)] 
@@ -203,12 +210,21 @@ export function useTacticsBoard() {
     const newAwayPlayers = createDefaultAwayPlayers(awayColors);
     setHomePlayers(newHomePlayers);
     setAwayPlayers(newAwayPlayers);
+    setBallPosition({ x: 50, y: 50 });
     saveToHistory(newHomePlayers, newAwayPlayers);
     toast('Board reset');
   }, [homeColors, awayColors, saveToHistory]);
 
   const toggleAwayTeam = useCallback(() => {
     setShowAwayTeam(prev => !prev);
+  }, []);
+
+  const toggleBall = useCallback(() => {
+    setShowBall(prev => !prev);
+  }, []);
+
+  const moveBall = useCallback((x: number, y: number) => {
+    setBallPosition({ x, y });
   }, []);
 
   return {
@@ -219,11 +235,15 @@ export function useTacticsBoard() {
     awayColors,
     activeTeam,
     showAwayTeam,
+    showBall,
+    ballPosition,
     savedFormations,
     canUndo: historyIndex > 0,
     canRedo: historyIndex < history.length - 1,
     setActiveTeam,
     toggleAwayTeam,
+    toggleBall,
+    moveBall,
     updatePlayer,
     commitPlayerMove,
     undo,
