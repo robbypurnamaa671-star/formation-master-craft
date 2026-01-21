@@ -104,6 +104,7 @@ const Index = () => {
               isDrawingMode={isDrawingMode}
               arrowType={arrowType}
               hasArrows={arrows.length > 0}
+              showBall={showBall}
               onUndo={undo}
               onRedo={redo}
               onReset={resetBoard}
@@ -112,6 +113,7 @@ const Index = () => {
               onToggleDrawing={toggleDrawingMode}
               onChangeArrowType={changeArrowType}
               onClearArrows={clearArrows}
+              onToggleBall={toggleBall}
             />
             
             <TacticsBoard
