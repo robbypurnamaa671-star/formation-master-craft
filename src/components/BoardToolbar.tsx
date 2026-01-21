@@ -1,5 +1,5 @@
 import React from 'react';
-import { Undo2, Redo2, RotateCcw, Save, Download, Pencil, MoveRight, Route, Trash2 } from 'lucide-react';
+import { Undo2, Redo2, RotateCcw, Save, Download, Pencil, MoveRight, Route, Trash2, Circle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ArrowType } from '@/types/tactics';
 
@@ -9,6 +9,7 @@ interface BoardToolbarProps {
   isDrawingMode: boolean;
   arrowType: ArrowType;
   hasArrows: boolean;
+  showBall: boolean;
   onUndo: () => void;
   onRedo: () => void;
   onReset: () => void;
@@ -17,6 +18,7 @@ interface BoardToolbarProps {
   onToggleDrawing: () => void;
   onChangeArrowType: (type: ArrowType) => void;
   onClearArrows: () => void;
+  onToggleBall: () => void;
 }
 
 export const BoardToolbar: React.FC<BoardToolbarProps> = ({
@@ -33,6 +35,8 @@ export const BoardToolbar: React.FC<BoardToolbarProps> = ({
   onToggleDrawing,
   onChangeArrowType,
   onClearArrows,
+  onToggleBall,
+  showBall,
 }) => {
   const tools = [
     { icon: Undo2, onClick: onUndo, disabled: !canUndo, label: 'Undo' },
@@ -66,6 +70,23 @@ export const BoardToolbar: React.FC<BoardToolbarProps> = ({
       
       {/* Drawing tools */}
       <div className="flex items-center justify-center gap-2">
+        {/* Ball toggle */}
+        <motion.button
+          onClick={onToggleBall}
+          className={`p-2.5 rounded-lg transition-all flex items-center gap-2 ${
+            showBall 
+              ? 'bg-orange-500 text-white' 
+              : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+          }`}
+          whileTap={{ scale: 0.95 }}
+          title={showBall ? 'Hide Ball' : 'Show Ball'}
+        >
+          <Circle className="w-5 h-5" fill={showBall ? 'currentColor' : 'none'} />
+          <span className="text-sm font-medium">Ball</span>
+        </motion.button>
+
+        <div className="w-px h-6 bg-border" />
+        
         <motion.button
           onClick={onToggleDrawing}
           className={`p-2.5 rounded-lg transition-all flex items-center gap-2 ${
