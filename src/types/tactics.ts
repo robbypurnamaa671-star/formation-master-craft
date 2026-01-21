@@ -57,6 +57,17 @@ export interface Arrow {
   color: string;
 }
 
+export type ZoneColor = 'red' | 'blue' | 'green' | 'yellow';
+
+export interface Zone {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  color: ZoneColor;
+}
+
 export interface HistoryState {
   players: Player[];
 }

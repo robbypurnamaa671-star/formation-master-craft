@@ -32,8 +32,10 @@ const Index = () => {
     showBall,
     ballPosition,
     arrows,
-    isDrawingMode,
+    zones,
+    drawingMode,
     arrowType,
+    zoneColor,
     savedFormations,
     canUndo,
     canRedo,
@@ -41,11 +43,15 @@ const Index = () => {
     toggleAwayTeam,
     toggleBall,
     moveBall,
-    toggleDrawingMode,
+    setDrawingModeType,
     changeArrowType,
+    changeZoneColor,
     addArrow,
     deleteArrow,
     clearArrows,
+    addZone,
+    deleteZone,
+    clearZones,
     updatePlayer,
     commitPlayerMove,
     undo,
@@ -101,18 +107,22 @@ const Index = () => {
             <BoardToolbar
               canUndo={canUndo}
               canRedo={canRedo}
-              isDrawingMode={isDrawingMode}
+              drawingMode={drawingMode}
               arrowType={arrowType}
+              zoneColor={zoneColor}
               hasArrows={arrows.length > 0}
+              hasZones={zones.length > 0}
               showBall={showBall}
               onUndo={undo}
               onRedo={redo}
               onReset={resetBoard}
               onSave={() => setSaveDialogOpen(true)}
               onExport={handleExport}
-              onToggleDrawing={toggleDrawingMode}
+              onSetDrawingMode={setDrawingModeType}
               onChangeArrowType={changeArrowType}
+              onChangeZoneColor={changeZoneColor}
               onClearArrows={clearArrows}
+              onClearZones={clearZones}
               onToggleBall={toggleBall}
             />
             
@@ -127,10 +137,14 @@ const Index = () => {
               ballPosition={ballPosition}
               onBallMove={moveBall}
               arrows={arrows}
-              isDrawingMode={isDrawingMode}
+              zones={zones}
+              drawingMode={drawingMode}
               arrowType={arrowType}
+              zoneColor={zoneColor}
               onAddArrow={addArrow}
               onDeleteArrow={deleteArrow}
+              onAddZone={addZone}
+              onDeleteZone={deleteZone}
             />
             
             {selectedPlayer ? (
