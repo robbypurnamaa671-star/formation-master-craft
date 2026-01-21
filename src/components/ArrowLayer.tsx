@@ -63,23 +63,23 @@ export const ArrowLayer: React.FC<ArrowLayerProps> = ({
         <defs>
           <marker
             id={markerId}
-            markerWidth="10"
-            markerHeight="7"
-            refX="9"
-            refY="3.5"
+            markerWidth="4"
+            markerHeight="3"
+            refX="3.5"
+            refY="1.5"
             orient="auto"
           >
-            <polygon points="0 0, 10 3.5, 0 7" fill={color} />
+            <polygon points="0 0, 4 1.5, 0 3" fill={color} />
           </marker>
         </defs>
         <path
           d={pathD}
           fill="none"
           stroke={color}
-          strokeWidth="3"
-          strokeDasharray={isDashed ? '8 4' : 'none'}
+          strokeWidth="0.8"
+          strokeDasharray={isDashed ? '2 1.5' : 'none'}
           markerEnd={`url(#${markerId})`}
-          style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
+          style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))' }}
         />
         {id && (
           <circle
