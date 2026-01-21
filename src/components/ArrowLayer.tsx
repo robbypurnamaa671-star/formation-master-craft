@@ -18,6 +18,29 @@ export const ArrowLayer: React.FC<ArrowLayerProps> = ({
     return type === 'pass' ? '#FBBF24' : '#22D3EE'; // Yellow for pass, cyan for run
   };
 
+  // Calculate control point for quadratic Bézier curve
+  const getControlPoint = (startX: number, startY: number, endX: number, endY: number) => {
+    const midX = (startX + endX) / 2;
+    const midY = (startY + endY) / 2;
+    
+    // Calculate perpendicular offset for curve
+    const dx = endX - startX;
+    const dy = endY - startY;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    
+    // Curve intensity based on distance (longer arrows = more curve)
+    const curveIntensity = Math.min(length * 0.15, 12);
+    
+    // Perpendicular direction (rotate 90 degrees)
+    const perpX = -dy / length;
+    const perpY = dx / length;
+    
+    return {
+      x: midX + perpX * curveIntensity,
+      y: midY + perpY * curveIntensity,
+    };
+  };
+
   const renderArrow = (
     startX: number,
     startY: number,
@@ -29,6 +52,11 @@ export const ArrowLayer: React.FC<ArrowLayerProps> = ({
     const color = getArrowColor(type);
     const isDashed = type === 'run';
     const markerId = id ? `arrowhead-${id}` : 'arrowhead-current';
+    
+    const control = getControlPoint(startX, startY, endX, endY);
+    
+    // Create curved path using quadratic Bézier
+    const pathD = `M ${startX} ${startY} Q ${control.x} ${control.y} ${endX} ${endY}`;
 
     return (
       <g key={id || 'current'}>
@@ -44,22 +72,19 @@ export const ArrowLayer: React.FC<ArrowLayerProps> = ({
             <polygon points="0 0, 10 3.5, 0 7" fill={color} />
           </marker>
         </defs>
-        <line
-          x1={`${startX}%`}
-          y1={`${startY}%`}
-          x2={`${endX}%`}
-          y2={`${endY}%`}
+        <path
+          d={pathD}
+          fill="none"
           stroke={color}
           strokeWidth="3"
           strokeDasharray={isDashed ? '8 4' : 'none'}
           markerEnd={`url(#${markerId})`}
-          className="drop-shadow-md"
           style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
         />
         {id && (
           <circle
-            cx={`${(startX + endX) / 2}%`}
-            cy={`${(startY + endY) / 2}%`}
+            cx={control.x}
+            cy={control.y}
             r="8"
             fill="transparent"
             className="cursor-pointer hover:fill-red-500/30"
