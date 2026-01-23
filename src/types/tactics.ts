@@ -19,6 +19,8 @@ export interface Formation {
   awayPlayers: Player[];
   homeColors: TeamColors;
   awayColors: TeamColors;
+  arrows: Arrow[];
+  zones: Zone[];
   createdAt: number;
   updatedAt: number;
 }
