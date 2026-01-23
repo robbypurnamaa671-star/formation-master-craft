@@ -148,6 +148,8 @@ export function useTacticsBoard() {
       awayPlayers: awayPlayers.map(p => ({ ...p })),
       homeColors,
       awayColors,
+      arrows: arrows.map(a => ({ ...a })),
+      zones: zones.map(z => ({ ...z })),
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
@@ -160,7 +162,7 @@ export function useTacticsBoard() {
     
     toast.success(`Formation "${name}" saved!`);
     return formation;
-  }, [homePlayers, awayPlayers, homeColors, awayColors]);
+  }, [homePlayers, awayPlayers, homeColors, awayColors, arrows, zones]);
 
   const loadFormation = useCallback((formation: Formation) => {
     const newHomePlayers = formation.players.map(p => ({ ...p, id: generateId(), team: 'home' as TeamType }));
@@ -172,6 +174,12 @@ export function useTacticsBoard() {
     }
     if (formation.homeColors) setHomeColors(formation.homeColors);
     if (formation.awayColors) setAwayColors(formation.awayColors);
+    
+    // Load arrows and zones with new IDs
+    const newArrows = (formation.arrows || []).map(a => ({ ...a, id: generateArrowId() }));
+    const newZones = (formation.zones || []).map(z => ({ ...z, id: generateZoneId() }));
+    setArrows(newArrows);
+    setZones(newZones);
     
     saveToHistory(newHomePlayers, newAwayPlayers.length > 0 ? newAwayPlayers : awayPlayers);
     toast.success(`Loaded "${formation.name}"`);
