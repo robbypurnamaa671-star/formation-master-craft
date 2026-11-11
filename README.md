@@ -64,6 +64,20 @@ This project is built with:
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
 
+## Android app setup
+
+This project includes a Capacitor Android app. Open the native project in Android Studio with:
+
+```sh
+npm install
+npm run android:sync
+npm run android:open
+```
+
+For release builds for Google Play, remove the `server` entry from `capacitor.config.ts` before syncing. It points the preview app at the Lovable preview URL; release builds should use the bundled files in `dist` instead. Then run `npm run android:sync`, open Android Studio, and create a signed Android App Bundle (AAB) for Play Console.
+
+The Play Console listing, signing key, store assets, privacy disclosures, and final review still need to be completed by the publisher.
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!
