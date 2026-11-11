@@ -74,9 +74,9 @@ npm run android:sync
 npm run android:open
 ```
 
-For release builds for Google Play, remove the `server` entry from `capacitor.config.ts` before syncing. It points the preview app at the Lovable preview URL; release builds should use the bundled files in `dist` instead. Then run `npm run android:sync`, open Android Studio, and create a signed Android App Bundle (AAB) for Play Console.
+For Google Play releases, run `npm run android:release` before opening Android Studio. This uses the bundled app files instead of the Lovable preview URL. In Android Studio, create a signed Android App Bundle (AAB) for Play Console.
 
-The Play Console listing, signing key, store assets, privacy disclosures, and final review still need to be completed by the publisher.
+The Play Console listing, signing key, store assets, privacy disclosures, and final review still need to be completed by the publisher. Release signing and the Play Console upload must be completed on your own developer account.
 
 ## Can I connect a custom domain to my Lovable project?
 
